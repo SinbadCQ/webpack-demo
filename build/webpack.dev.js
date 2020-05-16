@@ -1,9 +1,9 @@
 const merge = require('webpack-merge');
-const path = require('path');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-    devtool: 'inline-source-map',
+    mode: 'development', //启用开发模式内置优化
+    devtool: 'inline-source-map', //debug
     devServer: {
         contentBase: '../src',
         progress: true,  // 是否显示进度条
@@ -14,19 +14,6 @@ module.exports = merge(common, {
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                loader: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, '../src'), //应用在实际需要转换的位置
-            },
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 loader: 'file-loader',

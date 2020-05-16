@@ -21,7 +21,7 @@ function component() {
     element.innerHTML = 'Hello, webpack!';
     element.appendChild(btn);
     // element.classList.add('hello');
-
+    console.log(999)
     btn.onclick = () => import(/* webpackChunkName: "print" */ './print').then(module => {
         var print = module.default;
         print();

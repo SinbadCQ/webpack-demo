@@ -10,6 +10,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // process.env.NODE_ENV 指定环境
 
 module.exports = merge(common, {
+    mode: 'production', //启用生产模式内置优化
     // devtool: 'source-map', //报错信息定位
     // 将公共模块抽离到一个公共的chunk
     optimization: {
@@ -25,19 +26,6 @@ module.exports = merge(common, {
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                loader: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, '../src'), //应用在实际需要转换的位置
-            },
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [{ // 图片文件小于8k时编译成dataUrl直接嵌入页面，超过8k回退使用file-loader
@@ -67,9 +55,9 @@ module.exports = merge(common, {
     plugins: [
         new CleanWebpackPlugin(),
         new UglifyJSPlugin(),
-        new UglifyJSPlugin({
-            sourceMap: false,
-        }),
+        // new UglifyJSPlugin({
+        //     sourceMap: false
+        // }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
@@ -82,6 +70,6 @@ module.exports = merge(common, {
         // })
         new ExtractTextPlugin({
             filename: '../dist/assets/css/[chunkhash:8].css'
-        }),
+        })
     ]
 })
